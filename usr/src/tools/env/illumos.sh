@@ -308,3 +308,23 @@ if [[ "$ENABLE_SMATCH" == "1" ]]; then
 	SMATCHBIN=$CODEMGR_WS/usr/src/tools/proto/root_$MACH-nd/opt/onbld/bin/$MACH/smatch
 	export SHADOW_CCS="$SHADOW_CCS smatch,$SMATCHBIN,smatch"
 fi
+
+
+
+#--------------USE TEMPORARILY TO BUILD ON OI-------------------------------------
+#
+# Set a package version number which is greater than the current OpenIndiana
+# build number.
+#
+export PKGVERS_BRANCH=9999.99.0.0
+
+#
+# Set Perl related variables:
+#
+PERL='/usr/perl5/bin/perl'
+export PERL_VERSION="$($PERL -e 'print $^V =~ /^v(5\.[^\.]*).*$/')"
+export PERL_PKGVERS="$($PERL -e 'print "-", $^V =~ /^v(5)\.([^\.]*).*$/')"
+export PERL_ARCH="$($PERL -MConfig -e 'print $Config{archname}')"
+export PERL_ARCH64="$PERL_ARCH"
+export BUILDPERL32="$($PERL -MConfig -e 'print $Config{ptrsize} == 4 ? "" : "#"')"
+export BUILDPERL64="$($PERL -MConfig -e 'print $Config{ptrsize} == 8 ? "" : "#"')"
